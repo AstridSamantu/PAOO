@@ -12,4 +12,5 @@ public:
     Student(std::string name, int numberOfGrades);
     ~Student();
     Student(const Student& other);
+    Student(Student&& other) noexcept;
 };

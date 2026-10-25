@@ -24,6 +24,17 @@ Student::Student(const Student& other)
     cout << "Copy constructor called" << endl;
 }
 
+Student::Student(Student&& other) noexcept
+    : name(other.name),
+      numberOfGrades(other.numberOfGrades),
+      grades(other.grades)
+{
+    other.numberOfGrades = 0;
+    other.grades = nullptr;
+
+    cout << "Move constructor called" << endl;
+}
+
 Student::~Student()
 {
     delete[] grades;
