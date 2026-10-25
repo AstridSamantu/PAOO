@@ -5,6 +5,8 @@ using namespace std;
 
 int main()
 {
-    Student student("Astrid", 5);
+    Student student1("Astrid", 5);
+    Student student2 = student1;
+
     return 0;
 }

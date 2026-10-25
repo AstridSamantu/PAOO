@@ -11,4 +11,5 @@ private:
 public:
     Student(std::string name, int numberOfGrades);
     ~Student();
+    Student(const Student& other);
 };

@@ -11,6 +11,19 @@ Student::Student(string name, int numberOfGrades)
     cout << "Constructor called" << endl;
 }
 
+Student::Student(const Student& other)
+    : name(other.name),
+      numberOfGrades(other.numberOfGrades),
+      grades(new int[other.numberOfGrades])
+{
+    for (int i = 0; i < numberOfGrades; i++)
+    {
+        grades[i] = other.grades[i];
+    }
+
+    cout << "Copy constructor called" << endl;
+}
+
 Student::~Student()
 {
     delete[] grades;
