@@ -40,3 +40,8 @@ Student::~Student()
     delete[] grades;
     cout << "Destructor called" << endl;
 }
+
+void Student::print()
+{
+    cout << name << " " << numberOfGrades << " " << grades << endl;
+}

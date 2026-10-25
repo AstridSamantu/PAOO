@@ -13,4 +13,5 @@ public:
     ~Student();
     Student(const Student& other);
     Student(Student&& other) noexcept;
+    void print();
 };
