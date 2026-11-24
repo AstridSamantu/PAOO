@@ -1,22 +1,20 @@
+
 #include "../inc/Library.hpp"
-#include <utility>
 
-BookLock::BookLock(std::mutex& mutex) : mutex_(mutex) { mutex_.lock(); }
-BookLock::~BookLock() { mutex_.unlock(); }
+using namespace std;
 
-std::shared_ptr<std::mutex> sharedBookLock(std::mutex& mutex) {
-    mutex.lock();
-    try {
-        return std::shared_ptr<std::mutex>(&mutex, [](std::mutex* p) { p->unlock(); });
-    } catch (...) {
-        mutex.unlock();
-        throw;
-    }
+Library::Library(int pages) {
+    book_ = make_shared<Book>(pages);
 }
 
-std::unique_ptr<Book> makeOwnedBook(const std::string& title) {
-    return std::make_unique<Book>(title);
+int Library::getPages() const {
+    return book_->getPages();
 }
-std::shared_ptr<Book> makeSharedBook(const std::string& title) {
-    return std::make_shared<Book>(title);
+
+void Library::setBook(shared_ptr<Book> book) {
+    book_ = book;
+}
+
+shared_ptr<Book> Library::getBook() const {
+    return book_;
 }

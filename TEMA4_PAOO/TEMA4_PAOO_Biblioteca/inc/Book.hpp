@@ -1,23 +1,16 @@
-#pragma once
+#ifndef BOOK_HPP
+#define BOOK_HPP
+
 #include <memory>
-#include <string>
+using namespace std;
 
 class Book {
-    std::string title_;
+private:
+    unique_ptr<int> pages_;
+
 public:
-    explicit Book(std::string title);
-    const std::string& title() const;
+    Book(int pages);
+    int getPages() const;
 };
 
-// Deep copy: fiecare obiect detine propriul numar de pagini.
-class BookCopy {
-    std::unique_ptr<int> pages_;
-public:
-    explicit BookCopy(int pages);
-    BookCopy(const BookCopy& other);
-    BookCopy& operator=(const BookCopy& other);
-    BookCopy(BookCopy&& other) noexcept = default;
-    BookCopy& operator=(BookCopy&& other) noexcept = default;
-    int pages() const;
-    void setPages(int pages);
-};
+#endif

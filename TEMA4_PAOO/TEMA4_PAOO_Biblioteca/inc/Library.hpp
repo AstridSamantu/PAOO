@@ -1,20 +1,18 @@
+
 #pragma once
+
 #include "Book.hpp"
 #include <memory>
-#include <mutex>
 
-// RAII: lock in constructor, unlock in destructor; copiere interzisa.
-class BookLock {
-    std::mutex& mutex_;
+using namespace std;
+
+class Library {
+private:
+    shared_ptr<Book> book_;
+
 public:
-    explicit BookLock(std::mutex& mutex);
-    ~BookLock();
-    BookLock(const BookLock&) = delete;
-    BookLock& operator=(const BookLock&) = delete;
+    Library(int pages);
+    int getPages() const;
+    void setBook(shared_ptr<Book> book);
+    shared_ptr<Book> getBook() const;
 };
-
-// Varianta cu shared_ptr si custom deleter: unlock doar la ultimul proprietar.
-std::shared_ptr<std::mutex> sharedBookLock(std::mutex& mutex);
-
-std::unique_ptr<Book> makeOwnedBook(const std::string& title);
-std::shared_ptr<Book> makeSharedBook(const std::string& title);
