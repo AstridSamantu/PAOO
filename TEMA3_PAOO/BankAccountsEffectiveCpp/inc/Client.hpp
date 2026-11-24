@@ -1,27 +1,31 @@
-#pragma once
+
+#ifndef CLIENT_HPP
+#define CLIENT_HPP
+
 #include <string>
+using namespace std;
 
 class Client {
-protected:
-    std::string name_;
-    int id_;
+private:
+    string name;
+
 public:
-    Client(std::string name = "", int id = 0);
-    Client(const Client& other);
-    Client& operator=(const Client& other);
-    virtual ~Client() = default;
-    const std::string& name() const;
-    int id() const;
+    Client(string n);
+
+    string getName() const;
 };
 
 class PremiumClient : public Client {
-    int creditLimit_;
-    std::string tier_;
+private:
+    int points;
+
 public:
-    PremiumClient(std::string name = "", int id = 0,
-                  int creditLimit = 0, std::string tier = "Standard");
-    PremiumClient(const PremiumClient& other);
+    PremiumClient(string n, int p);
+
+    // Item 12
     PremiumClient& operator=(const PremiumClient& other);
-    int creditLimit() const;
-    const std::string& tier() const;
+
+    int getPoints() const;
 };
+
+#endif

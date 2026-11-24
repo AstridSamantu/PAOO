@@ -1,57 +1,35 @@
+
 #include "../inc/Account.hpp"
-#include <utility>
 
-Balance::Balance(int amount) : amount_(new int(amount)) {}
-Balance::Balance(const Balance& other)
-    : amount_(other.amount_ ? new int(*other.amount_) : nullptr) {}
-Balance::Balance(Balance&& other) noexcept : amount_(other.amount_) {
-    other.amount_ = nullptr;
+// Constructor
+Account::Account(int amount) {
+    balance = amount;
 }
-Balance::~Balance() { delete amount_; }
 
-Balance& Balance::operator=(const Balance& other) {
-    if (this == &other) return *this; // metoda 1: identity check
-    return assignCopyFirst(other);    // metoda 2: copy first, delete after
-}
-Balance& Balance::assignCopyFirst(const Balance& other) {
-    int* copy = other.amount_ ? new int(*other.amount_) : nullptr;
-    delete amount_;
-    amount_ = copy;
-    return *this;
-}
-Balance& Balance::assignCopySwap(Balance other) {
-    swap(other); // metoda 3: copy and swap (parametru prin valoare)
-    return *this;
-}
-void Balance::swap(Balance& other) noexcept {
-    using std::swap;
-    swap(amount_, other.amount_);
-}
-Balance& Balance::operator=(Balance&& other) noexcept {
-    if (this != &other) {
-        delete amount_; // eliberam resursa veche
-        amount_ = other.amount_;
-        other.amount_ = nullptr;
-    }
-    return *this;
-}
-int Balance::get() const { return amount_ ? *amount_ : 0; }
-
-Account::Account(int amount) : balance_(amount) {}
+// Item 10 + Item 11
 Account& Account::operator=(const Account& other) {
-    if (this != &other) balance_ = other.balance_;
+    // Item 11 - verificam autoatribuirea
+    if (this != &other) {
+        balance = other.balance;
+    }
+
+    // Item 10 - returnam referinta
     return *this;
 }
-Account& Account::operator=(int amount) {
-    balance_ = Balance(amount);
-    return *this;
-}
+
+// Item 10 - adunare
 Account& Account::operator+=(int amount) {
-    *this = getBalance() + amount;
+    balance += amount;
     return *this;
 }
+
+// Item 10 - scadere
 Account& Account::operator-=(int amount) {
-    *this = getBalance() - amount;
+    balance -= amount;
     return *this;
 }
-int Account::getBalance() const { return balance_.get(); }
+
+// Getter pentru sold
+int Account::getBalance() const {
+    return balance;
+}
